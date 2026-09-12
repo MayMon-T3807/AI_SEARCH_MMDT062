@@ -133,6 +133,7 @@ async function runSearch(c) {
   document.getElementById('journeyLabel').textContent = `JOURNEY — ${start.toUpperCase()} TO ${goal.toUpperCase()}`;
   document.getElementById('routeStatus').innerHTML = `<b>${c.my}</b> is searching for a way from ${start} to ${goal}…`;
   document.getElementById('stepsList').innerHTML = '';
+  document.getElementById('legendPathDot').style.background = c.color;
 
   if (start === goal) {
     document.getElementById('routeStatus').textContent = 'Pick two different cities to find a route.';
