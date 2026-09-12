@@ -1,0 +1,366 @@
+{
+  "nodes": {
+    "Yangon": {
+      "lat": 16.7967129,
+      "lon": 96.1609916
+    },
+    "Bago": {
+      "lat": 17.336667,
+      "lon": 96.479722
+    },
+    "Pyay": {
+      "lat": 18.816667,
+      "lon": 95.216667
+    },
+    "Mandalay": {
+      "lat": 21.9596834,
+      "lon": 96.0948743
+    },
+    "Pyin Oo Lwin": {
+      "lat": 22.0331367,
+      "lon": 96.4667341
+    },
+    "Meiktila": {
+      "lat": 20.8814233,
+      "lon": 95.8619463
+    },
+    "Naypyidaw": {
+      "lat": 19.7753289,
+      "lon": 96.1032552
+    },
+    "Nyaung-U": {
+      "lat": 21.1939539,
+      "lon": 94.9071494
+    },
+    "Monywa": {
+      "lat": 22.1182175,
+      "lon": 95.1324747
+    },
+    "Sagaing": {
+      "lat": 21.8774215,
+      "lon": 95.9839956
+    },
+    "Shwebo": {
+      "lat": 22.5666618,
+      "lon": 95.6999989
+    },
+    "Pathein": {
+      "lat": 16.783333,
+      "lon": 94.733333
+    },
+    "Myaungmya": {
+      "lat": 16.5833554,
+      "lon": 94.9039424
+    },
+    "Magway": {
+      "lat": 20.1491458,
+      "lon": 94.9213518
+    },
+    "Taungdwingyi": {
+      "lat": 20.001873,
+      "lon": 95.546135
+    },
+    "Dawei": {
+      "lat": 14.0797232,
+      "lon": 98.1990191
+    },
+    "Myeik": {
+      "lat": 12.4319552,
+      "lon": 98.5955711
+    },
+    "Taunggyi": {
+      "lat": 20.7870108,
+      "lon": 97.0387263
+    },
+    "Kalaw": {
+      "lat": 20.6356843,
+      "lon": 96.5668786
+    },
+    "Lashio": {
+      "lat": 22.9418628,
+      "lon": 97.745165
+    },
+    "Mawlamyine": {
+      "lat": 16.4908026,
+      "lon": 97.6284825
+    },
+    "Hpa-An": {
+      "lat": 16.8902634,
+      "lon": 97.6362745
+    },
+    "Loikaw": {
+      "lat": 19.674167,
+      "lon": 97.2094441
+    },
+    "Sittwe": {
+      "lat": 20.139197,
+      "lon": 92.8970859
+    },
+    "Myitkyina": {
+      "lat": 25.3833313,
+      "lon": 97.3999925
+    }
+  },
+  "edges": [
+    {
+      "from": "Yangon",
+      "to": "Bago",
+      "distance_km": 78.6
+    },
+    {
+      "from": "Yangon",
+      "to": "Myaungmya",
+      "distance_km": 186.8
+    },
+    {
+      "from": "Yangon",
+      "to": "Pathein",
+      "distance_km": 195.4
+    },
+    {
+      "from": "Bago",
+      "to": "Hpa-An",
+      "distance_km": 205.9
+    },
+    {
+      "from": "Bago",
+      "to": "Mawlamyine",
+      "distance_km": 221.0
+    },
+    {
+      "from": "Pyay",
+      "to": "Taungdwingyi",
+      "distance_km": 163.0
+    },
+    {
+      "from": "Pyay",
+      "to": "Naypyidaw",
+      "distance_km": 246.8
+    },
+    {
+      "from": "Pyay",
+      "to": "Magway",
+      "distance_km": 203.4
+    },
+    {
+      "from": "Mandalay",
+      "to": "Sagaing",
+      "distance_km": 20.0
+    },
+    {
+      "from": "Mandalay",
+      "to": "Pyin Oo Lwin",
+      "distance_km": 63.0
+    },
+    {
+      "from": "Mandalay",
+      "to": "Shwebo",
+      "distance_km": 110.9
+    },
+    {
+      "from": "Pyin Oo Lwin",
+      "to": "Sagaing",
+      "distance_km": 73.4
+    },
+    {
+      "from": "Pyin Oo Lwin",
+      "to": "Shwebo",
+      "distance_km": 164.3
+    },
+    {
+      "from": "Meiktila",
+      "to": "Kalaw",
+      "distance_km": 114.3
+    },
+    {
+      "from": "Meiktila",
+      "to": "Taungdwingyi",
+      "distance_km": 154.0
+    },
+    {
+      "from": "Meiktila",
+      "to": "Sagaing",
+      "distance_km": 142.9
+    },
+    {
+      "from": "Naypyidaw",
+      "to": "Taungdwingyi",
+      "distance_km": 101.0
+    },
+    {
+      "from": "Naypyidaw",
+      "to": "Kalaw",
+      "distance_km": 211.8
+    },
+    {
+      "from": "Naypyidaw",
+      "to": "Loikaw",
+      "distance_km": 228.7
+    },
+    {
+      "from": "Nyaung-U",
+      "to": "Monywa",
+      "distance_km": 144.6
+    },
+    {
+      "from": "Nyaung-U",
+      "to": "Meiktila",
+      "distance_km": 145.1
+    },
+    {
+      "from": "Nyaung-U",
+      "to": "Magway",
+      "distance_km": 147.9
+    },
+    {
+      "from": "Monywa",
+      "to": "Shwebo",
+      "distance_km": 102.1
+    },
+    {
+      "from": "Monywa",
+      "to": "Sagaing",
+      "distance_km": 113.3
+    },
+    {
+      "from": "Sagaing",
+      "to": "Shwebo",
+      "distance_km": 92.2
+    },
+    {
+      "from": "Pathein",
+      "to": "Myaungmya",
+      "distance_km": 58.2
+    },
+    {
+      "from": "Pathein",
+      "to": "Bago",
+      "distance_km": 257.7
+    },
+    {
+      "from": "Myaungmya",
+      "to": "Bago",
+      "distance_km": 249.4
+    },
+    {
+      "from": "Magway",
+      "to": "Taungdwingyi",
+      "distance_km": 83.1
+    },
+    {
+      "from": "Magway",
+      "to": "Meiktila",
+      "distance_km": 197.5
+    },
+    {
+      "from": "Dawei",
+      "to": "Myeik",
+      "distance_km": 245.0
+    },
+    {
+      "from": "Dawei",
+      "to": "Mawlamyine",
+      "distance_km": 316.2
+    },
+    {
+      "from": "Dawei",
+      "to": "Hpa-An",
+      "distance_km": 367.3
+    },
+    {
+      "from": "Myeik",
+      "to": "Mawlamyine",
+      "distance_km": 558.7
+    },
+    {
+      "from": "Myeik",
+      "to": "Hpa-An",
+      "distance_km": 609.9
+    },
+    {
+      "from": "Taunggyi",
+      "to": "Kalaw",
+      "distance_km": 67.4
+    },
+    {
+      "from": "Taunggyi",
+      "to": "Loikaw",
+      "distance_km": 153.6
+    },
+    {
+      "from": "Taunggyi",
+      "to": "Meiktila",
+      "distance_km": 181.7
+    },
+    {
+      "from": "Lashio",
+      "to": "Pyin Oo Lwin",
+      "distance_km": 211.1
+    },
+    {
+      "from": "Lashio",
+      "to": "Mandalay",
+      "distance_km": 273.3
+    },
+    {
+      "from": "Lashio",
+      "to": "Sagaing",
+      "distance_km": 283.9
+    },
+    {
+      "from": "Mawlamyine",
+      "to": "Hpa-An",
+      "distance_km": 60.3
+    },
+    {
+      "from": "Mawlamyine",
+      "to": "Yangon",
+      "distance_km": 298.8
+    },
+    {
+      "from": "Hpa-An",
+      "to": "Yangon",
+      "distance_km": 283.6
+    },
+    {
+      "from": "Loikaw",
+      "to": "Kalaw",
+      "distance_km": 163.2
+    },
+    {
+      "from": "Sittwe",
+      "to": "Magway",
+      "distance_km": 490.5
+    },
+    {
+      "from": "Sittwe",
+      "to": "Nyaung-U",
+      "distance_km": 637.8
+    },
+    {
+      "from": "Sittwe",
+      "to": "Taungdwingyi",
+      "distance_km": 573.7
+    },
+    {
+      "from": "Myitkyina",
+      "to": "Lashio",
+      "distance_km": 440.3
+    },
+    {
+      "from": "Myitkyina",
+      "to": "Shwebo",
+      "distance_km": 475.2
+    },
+    {
+      "from": "Myitkyina",
+      "to": "Pyin Oo Lwin",
+      "distance_km": 639.6
+    },
+    {
+      "from": "Bago",
+      "to": "Pyay",
+      "distance_km": 306.6
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>How It Works — ခရီးသွားဖော်</title>
+<style>
+  :root {
+    --pine: #3FA6E8;
+    --pine-deep: #1C86D9;
+    --gold: #C9A227;
+    --clay: #B5533C;
+    --cream: #F2EFE6;
+    --ink: #14243C;
+    --line: rgba(244,238,221,0.28);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--pine-deep);
+    color: var(--cream);
+  }
+  .sans { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-logo { height: 84px; width: auto; display: block; }
+  .brand .my { font-size: 22px; font-weight: 700; }
+  .brand .en {
+    font-family: -apple-system, sans-serif;
+    font-size: 12px; letter-spacing: 0.04em; color: var(--gold);
+  }
+  .menu { display: flex; gap: 28px; font-family: -apple-system, sans-serif; font-size: 14px; }
+  .menu a { color: var(--cream); text-decoration: none; opacity: 0.75; }
+  .menu a.active { opacity: 1; border-bottom: 2px solid var(--gold); padding-bottom: 4px; }
+  .lang-toggle {
+    font-family: -apple-system, sans-serif; font-size: 12px;
+    border: 1px solid var(--line); border-radius: 20px; padding: 6px 14px;
+    background: transparent; color: var(--cream); cursor: pointer;
+  }
+
+  main { max-width: 760px; margin: 0 auto; padding: 56px 40px 100px; }
+  h1 { font-size: 30px; font-weight: 400; margin-bottom: 10px; }
+  main > p.lead {
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    color: rgba(242,239,230,0.7);
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+  }
+  .step:last-child { border-bottom: 1px solid var(--line); }
+  .step .num {
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--gold);
+    padding-top: 4px;
+  }
+  .step h2 {
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .step p {
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(242,239,230,0.75);
+    max-width: 480px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <img src="/static/images/logo.png" alt="Traveller Mate logo" class="brand-logo">
+    <span class="my">ခရီးသွားဖော်</span>
+    <span class="en">TRAVELLER MATE</span>
+  </div>
+  <div class="menu">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('about') }}">About the algorithms</a>
+    <a href="{{ url_for('how_it_works') }}" class="active">How it works</a>
+  </div>
+  <button class="lang-toggle" id="langBtn">မြန်မာ</button>
+</nav>
+
+<main>
+  <h1 id="pageTitle">Choose your mate, start travelling</h1>
+  <p class="lead sans" id="pageLead">Four simple steps to watch a route get found across Myanmar.</p>
+
+  <div id="steps"></div>
+</main>
+
+<script>
+const steps = [
+  {
+    en: { h: "Choose your travel companion", p: "Pick one of six companions on the home page. Each one searches for a route in their own way — careful, bold, budget-minded, patient, quick, or wise." },
+    my: { h: "ခရီးအတူသွားမည့်သူကို ရွေးပါ", p: "ပင်မစာမျက်နှာတွင် အဖော် ခြောက်ယောက်ထဲမှ တစ်ယောက်ကို ရွေးချယ်ပါ။ တစ်ယောက်စီက မတူညီတဲ့ပုံစံနဲ့ လမ်းကြောင်းကို ရှာဖွေသည်။" }
+  },
+  {
+    en: { h: "Pick a start city and a destination", p: "Select where your journey begins and where it should end, from all 25 cities across Myanmar." },
+    my: { h: "စတင်မည့်မြို့နှင့် ခရီးဆုံးကို ရွေးပါ", p: "မြန်မာနိုင်ငံတစ်ဝှမ်းရှိ မြို့ ၂၅ မြို့ထဲမှ သင့်ခရီးစတင်မည့်နေရာနှင့် ဆုံးမည့်နေရာကို ရွေးချယ်ပါ။" }
+  },
+  {
+    en: { h: "Watch your companion travel", p: "The map animates city by city, showing exactly how your companion explores — which places they check, and in what order." },
+    my: { h: "သင့်အဖော် ခရီးသွားပုံကို ကြည့်ပါ", p: "မြေပုံသည် မြို့တစ်မြို့ချင်းစီ အလိုက် သက်ဝင်လှုပ်ရှားပြီး၊ သင့်အဖော် မည်သည့်မြို့များကို မည်သည့်အစီအစဉ်ဖြင့် စစ်ဆေးကြောင်း တိကျစွာပြသသည်။" }
+  },
+  {
+    en: { h: "See the route and the journey stats", p: "Once your companion arrives, the final path lights up — along with how many cities they checked and the total distance travelled." },
+    my: { h: "လမ်းကြောင်းနှင့် ခရီးစဉ်အချက်အလက်များကို ကြည့်ပါ", p: "သင့်အဖော် ရောက်ရှိသွားသောအခါ၊ နောက်ဆုံးလမ်းကြောင်းမှာ ထင်ရှားစွာပေါ်လာပြီး၊ စစ်ဆေးခဲ့သောမြို့အရေအတွက်နှင့် စုစုပေါင်းခရီးအကွာအဝေးပါ ပါဝင်လာမည်။" }
+  },
+];
+
+const container = document.getElementById('steps');
+function render(lang) {
+  container.innerHTML = '';
+  steps.forEach((s, i) => {
+    const row = document.createElement('div');
+    row.className = 'step';
+    const t = lang === 'my' ? s.my : s.en;
+    row.innerHTML = `
+      <div class="num">0${i + 1}</div>
+      <div>
+        <h2>${t.h}</h2>
+        <p>${t.p}</p>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+}
+render('en');
+
+document.getElementById('langBtn').addEventListener('click', function() {
+  this.dataset.lang = this.dataset.lang === 'my' ? 'en' : 'my';
+  const lang = this.dataset.lang || 'my';
+  this.textContent = lang === 'my' ? 'English' : 'မြန်မာ';
+  const titles = {
+    en: { title: "Choose your mate, start travelling", lead: "Four simple steps to watch a route get found across Myanmar." },
+    my: { title: "အဖော်ကိုရွေးပါ၊ ခရီးစတင်ပါ", lead: "မြန်မာနိုင်ငံတစ်ဝှမ်း လမ်းကြောင်းရှာဖွေတာကို ကြည့်ဖို့ ရိုးရှင်းသော အဆင့် လေးဆင့်။" }
+  };
+  document.getElementById('pageTitle').textContent = titles[lang].title;
+  document.getElementById('pageLead').textContent = titles[lang].lead;
+  render(lang);
+});
+</script>
+</body>
+</html>

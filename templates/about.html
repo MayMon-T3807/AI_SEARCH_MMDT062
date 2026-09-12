@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About the Algorithms — ခရီးသွားဖော်</title>
+<style>
+  :root {
+    --pine: #3FA6E8;
+    --pine-deep: #1C86D9;
+    --gold: #C9A227;
+    --clay: #B5533C;
+    --cream: #F2EFE6;
+    --ink: #14243C;
+    --line: rgba(244,238,221,0.28);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--pine-deep);
+    color: var(--cream);
+  }
+  .sans { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-logo { height: 84px; width: auto; display: block; }
+  .brand .my { font-size: 22px; font-weight: 700; }
+  .brand .en {
+    font-family: -apple-system, sans-serif;
+    font-size: 12px; letter-spacing: 0.04em; color: var(--gold);
+  }
+  .menu { display: flex; gap: 28px; font-family: -apple-system, sans-serif; font-size: 14px; }
+  .menu a { color: var(--cream); text-decoration: none; opacity: 0.75; }
+  .menu a.active { opacity: 1; border-bottom: 2px solid var(--gold); padding-bottom: 4px; }
+  .lang-toggle {
+    font-family: -apple-system, sans-serif; font-size: 12px;
+    border: 1px solid var(--line); border-radius: 20px; padding: 6px 14px;
+    background: transparent; color: var(--cream); cursor: pointer;
+  }
+
+  main { max-width: 980px; margin: 0 auto; padding: 56px 40px 100px; }
+  main > p.lead {
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    color: rgba(242,239,230,0.7);
+    max-width: 520px;
+    margin-bottom: 48px;
+  }
+  h1 { font-size: 30px; font-weight: 400; margin-bottom: 10px; }
+
+  .companion-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 28px;
+    padding: 32px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .companion-row:last-child { border-bottom: 1px solid var(--line); }
+  @media (max-width: 700px) {
+    .companion-row { grid-template-columns: 1fr; }
+  }
+  .portrait-lg {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .portrait-lg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .portrait-lg .fallback {
+    display: none;
+    width: 100%; height: 100%;
+    align-items: center; justify-content: center;
+    font-size: 44px; font-weight: 700; color: var(--cream);
+  }
+  .companion-text .tag {
+    font-family: -apple-system, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .companion-text .names {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .companion-text .my-name { font-size: 24px; font-weight: 700; }
+  .companion-text .en-name {
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    color: rgba(242,239,230,0.6);
+  }
+  .companion-text .bio {
+    font-size: 15px;
+    line-height: 1.75;
+    max-width: 560px;
+    margin-bottom: 14px;
+  }
+  .companion-text .mechanics {
+    font-family: -apple-system, sans-serif;
+    font-size: 12.5px;
+    color: rgba(242,239,230,0.65);
+    border-left: 2px solid var(--gold);
+    padding-left: 12px;
+    max-width: 560px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <img src="/static/images/logo.png" alt="Traveller Mate logo" class="brand-logo">
+    <span class="my">ခရီးသွားဖော်</span>
+    <span class="en">TRAVELLER MATE</span>
+  </div>
+  <div class="menu">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('about') }}" class="active">About the algorithms</a>
+    <a href="{{ url_for('how_it_works') }}">How it works</a>
+  </div>
+  <button class="lang-toggle" id="langBtn">မြန်မာ</button>
+</nav>
+
+<main>
+  <h1 id="pageTitle">Six companions, six ways of thinking</h1>
+  <p class="lead sans" id="pageLead">Each travel companion searches for a route in their own way. Meet them here, then pick one on the map to see how they think.</p>
+
+  <div id="rows"></div>
+</main>
+
+<script>
+const companions = [
+  {
+    id: "bfs", color: "#5C8B6E", img: "/static/images/BFS.png",
+    my: "ကိုသေချာ", en: "BFS · Careful Scout",
+    bioEn: "Before taking one more step forward, he makes sure every nearby city has already been checked. Only once the closest ring of cities is fully explored does he move one step further out, like ripples spreading out from a stone dropped in water. He never skips ahead, so he always finds a route with the fewest stops, even if it isn't the shortest in distance.",
+    bioMy: "ရှေ့ဆက်မခြေလှမ်းခင် အနီးဆုံးမြို့တွေအားလုံးကို အရင်စစ်ဆေးပြီးမှသာ ရှေ့ဆက်တတ်တဲ့သူပါ။ ရေထဲကျောက်ခဲပစ်လိုက်တဲ့အခါ လှိုင်းလေးတွေ အဝိုင်းပုံနဲ့ တဖြည်းဖြည်း ပျံ့နှံ့သွားသလိုပါပဲ။ အနီးဆုံးအဝိုင်းကို အပြည့်အစုံ စစ်ဆေးပြီးမှသာ တစ်ဆင့်ထပ်ပြီး ရွေ့တယ်။ ဘယ်တော့မှ ခုန်ကျော်မသွားတဲ့အတွက် ခြေလှမ်းအရေအတွက် အနည်းဆုံးဖြစ်တဲ့ လမ်းကို အမြဲရှာတွေ့တယ်။ အကွာအဝေးအတိုဆုံး ဖြစ်ချင်မှဖြစ်မယ်။",
+    mechEn: "He keeps a waiting line of cities still to check. He always looks at whichever city has been waiting the longest before adding any new ones to the back of the line. This way, cities close to the start naturally get checked before cities further away.",
+    mechMy: "စစ်ဆေးရမယ့် မြို့တွေရဲ့ တန်းစီစာရင်းတစ်ခု ထားရှိထားတယ်။ အရင်ဆုံးကတည်းက စောင့်နေတဲ့ မြို့ကို အမြဲအရင်စစ်ဆေးပြီးမှ၊ မြို့အသစ်တွေကို တန်းရဲ့ နောက်ဆုံးမှာ ထပ်ထည့်တယ်။ ဒီနည်းနဲ့ အစပ်ကို နီးတဲ့ မြို့တွေက ဝေးတဲ့ မြို့တွေထက် ရှေ့ဆုံးက စစ်ဆေးဖြစ်ကြတယ်။"
+  },
+  {
+    id: "dfs", color: "#B5533C", img: "/static/images/DFS.png",
+    my: "ကိုစွန့်စား", en: "DFS · Bold Wanderer",
+    bioEn: "He picks one road and follows it as far as it will take him, without a second thought. Only when that road truly ends, when there's no new city left to try, does he turn back and attempt a different direction. This means he might stumble onto the destination quickly, or he might wander far out of the way first. Either way, he never stops to consider how far he's already travelled.",
+    bioMy: "လမ်းတစ်ခုကို ရွေးလိုက်ပြီဆိုရင် ဘာမှပြန်မစဉ်းစားတော့ဘဲ ဆက်တိုက်ဝင်သွားတယ်။ လမ်းအစစ်အမှန် ကုန်သွားမှ၊ ရှေ့ဆက်မယ့် မြို့အသစ် မရှိတော့မှသာ ပြန်လှည့်ပြီး တခြားလမ်းကို စမ်းကြည့်တယ်။ ဒါကြောင့် တခါတလေ ခရီးဆုံးကို မြန်မြန်ရောက်နိုင်သလို၊ တခါတလေလည်း လမ်းအလွန်ဝေးအောင် လှည့်ပတ်သွားနိုင်တယ်။ ဘယ်နည်းနဲ့ပဲဖြစ်ဖြစ် ဘယ်လောက်ခရီးသွားလာပြီးလဲဆိုတာ ဘယ်တော့မှ ပြန်မစဉ်းစားဘူး။",
+    mechEn: "Instead of a waiting line, he keeps a pile of roads he could still try, always picking whichever one he most recently added to the top. He pushes as deep as possible down a single path before ever backing up to try something else.",
+    mechMy: "တန်းစီစာရင်းအစား၊ သူ့မှာ စမ်းကြည့်ဖို့ ကျန်နေသေးတဲ့ လမ်းတွေရဲ့ ပုံးတစ်ခုရှိတယ်။ အပေါ်ဆုံးမှာ အသစ်ဆုံး ထည့်ခဲ့တဲ့ လမ်းကိုပဲ အမြဲရွေးတယ်။ တခြားလမ်းကို ပြန်စမ်းခင်၊ တစ်လမ်းတည်းအတိုင်း တတ်နိုင်သမျှ နက်နက်ရှိုင်းရှိုင်း ရှေ့ဆက်တယ်။"
+  },
+  {
+    id: "ucs", color: "#4A7A8C", img: "/static/images/UCS.png",
+    my: "ကိုချွေတာ", en: "UCS · Budget Trader",
+    bioEn: "Before choosing any road, he works out exactly what it will cost, added up with everything already spent. Even if one road looks shorter or more direct on the map, he won't take it unless the total cost from the very beginning really is the cheapest option available. Slow and deliberate, but he always finds the most economical way to the destination.",
+    bioMy: "လမ်းတစ်ခုကို မရွေးခင် အခုအထိ ကုန်ကျခဲ့တဲ့ ကုန်ကျစရိတ်နဲ့ ပေါင်းပြီး တွက်ကြည့်တယ်။ မြေပုံပေါ်မှာ လမ်းတစ်ခုက တိုတယ်၊ တည့်တယ်လို့ ထင်ရရင်တောင်၊ အစကနေစပြီး စုစုပေါင်းကုန်ကျစရိတ်က တကယ့်အသက်သာဆုံး ဖြစ်မှသာ ရွေးတယ်။ နှေးနှေးချွင်ချွင် ဆင်ခြင်တတ်ပေမယ့် ခရီးဆုံးကို အသက်သာဆုံးနည်းနဲ့ အမြဲရှာတွေ့တယ်။",
+    mechEn: "He always looks at every possible road still open to him, and picks whichever one keeps his running total the lowest, even if that means passing over a road that looked tempting at first glance.",
+    mechMy: "ဖြစ်နိုင်တဲ့ လမ်းတွေအားလုံးကို အမြဲကြည့်ပြီး၊ စုစုပေါင်း ကုန်ကျစရိတ် အနည်းဆုံးဖြစ်စေမယ့် လမ်းကိုပဲ ရွေးတယ်။ ရှေ့ကကြည့်လို့ ဆွဲဆောင်မှုရှိပုံပေါ်တဲ့ လမ်းကို ကျော်သွားရရင်တောင် ရွေးတယ်။"
+  },
+  {
+    id: "ids", color: "#8B6BAE", img: "/static/images/IDS.png",
+    my: "ကိုစူးစမ်း", en: "IDS · Patient Scout",
+    bioEn: "He never assumes one search is enough. First he checks only a short distance ahead. If the destination isn't found, he starts completely over and checks a little further this time, repeating the whole search again and again, each round reaching slightly deeper than the last. It looks repetitive, but this patience means he never misses a route, no matter how far away it truly is.",
+    bioMy: "ရှာဖွေမှု တစ်ခါတည်းနဲ့ လုံလောက်ပြီလို့ ဘယ်တော့မှ မယူဆဘူး။ အရင်ဆုံး အနည်းငယ်အကွာအထိပဲ စစ်ဆေးတယ်၊ ခရီးဆုံးကို မတွေ့သေးရင် အစကနေ ပြန်စပြီး နည်းနည်းပိုဝေးအောင် ထပ်စစ်တယ်။ တစ်ခေါက်ပြီးတစ်ခေါက် ရှာဖွေမှုတစ်ခုလုံးကို ထပ်ခါထပ်ခါ လုပ်တယ်၊ တစ်ခေါက်စီမှာ အရင်ကထက် အနည်းငယ်ပိုနက်အောင် လုပ်တယ်။ ထပ်နေသလို ကြည့်ရပေမယ့်၊ ဒီစိတ်ရှည်မှုကြောင့် လမ်းက ဘယ်လောက်ဝေးဝေး ဘယ်တော့မှ လွတ်မသွားဘူး။",
+    mechEn: "Each round, he explores like a bold wanderer, one path at a time, but only up to a fixed limit. If he doesn't find the destination within that limit, he throws away everything he's learned and tries again from scratch, with the limit raised by one more step than before.",
+    mechMy: "တစ်ခေါက်စီမှာ၊ ကိုစွန့်စားလိုပဲ တစ်လမ်းချင်းစီကို ရှေ့ဆက်တယ်။ ဒါပေမယ့် သတ်မှတ်ထားတဲ့ အကွာအထိပဲ။ အဲဒီအကွာအတွင်း ခရီးဆုံးကို မတွေ့ရင်၊ သိထားသမျှအားလုံးကို ပစ်ပယ်ပြီး၊ အကွာအဝေးကို တစ်ဆင့်တိုးတိုးပြီး အသစ်ပြန်စတယ်။"
+  },
+  {
+    id: "greedy", color: "#C9A227", img: "/static/images/Greedy.png",
+    my: "ကိုစိတ်မြန်", en: "Greedy · Quick Guess",
+    bioEn: "He never looks back, only forward. At every step he simply asks: \"which nearby city looks closest to the destination right now?\" and heads straight there, without a thought for how far he's already travelled. This makes him fast, often impressively so, but it also means he can walk straight past a genuinely shorter route just because a different city looked more promising in the moment.",
+    bioMy: "နောက်ကို ဘယ်တော့မှ ပြန်မကြည့်ဘူး၊ ရှေ့ကိုပဲ ကြည့်တယ်။ ခြေလှမ်းတိုင်းမှာ 'အခုချိန်မှာ ဘယ်မြို့က ခရီးဆုံးနဲ့ အနီးဆုံးလိုပေါ်လဲ' လို့ပဲ မေးပြီး တည့်တည့် ရှေ့ဆက်တယ်။ ဘယ်လောက်ခရီးသွားလာပြီးလဲဆိုတာ လုံးဝမစဉ်းစားဘူး။ ဒါကြောင့် အလွန်မြန်တတ်တယ်၊ ဒါပေမယ့် တကယ့်တိုတဲ့လမ်းကို တခြားမြို့တစ်ခုက အနီးဆုံးလိုထင်ရလို့ ကျော်သွားတတ်တာလည်း ရှိတယ်။",
+    mechEn: "At each step, he only estimates the straight-line distance from a city to the destination, and always picks whichever city has the smallest estimate. He ignores the cost of the journey so far completely.",
+    mechMy: "ခြေလှမ်းတိုင်းမှာ၊ မြို့တစ်ခုကနေ ခရီးဆုံးအထိ ဖြောင့်ဖြောင့်တန်းတန်း အကွာအဝေးကိုသာ ခန့်မှန်းတယ်၊ အနီးဆုံးလို့ ခန့်မှန်းရတဲ့ မြို့ကိုပဲ အမြဲရွေးတယ်။ အခုအထိ ခရီးသွားလာမှု ကုန်ကျစရိတ်ကို လုံးဝမကြည့်ဘူး။"
+  },
+  {
+    id: "astar", color: "#14243C", img: "/static/images/A.png",
+    my: "ကိုဉာဏ်ကြီး", en: "A* · Wise Guide",
+    bioEn: "He's the one who thinks in two directions at once: how far have I already come, and how far do I still estimate is left? By weighing both together at every single step, he usually finds his way to the destination both quickly and by the genuinely cheapest route, combining the Budget Trader's carefulness with the Quick Guess's speed.",
+    bioMy: "တစ်ချိန်တည်းမှာ လမ်းနှစ်ခွမှာ တွေးနိုင်သူ။ ဘယ်လောက်ခရီးရောက်ပြီးပြီလဲ၊ ဘယ်လောက်ကျန်သေးမလဲဆိုတာကို နှစ်ခုစလုံး ချိန်ညှိစဉ်းစားတယ်။ ခြေလှမ်းတိုင်းမှာ နှစ်ခုစလုံးကို ချိန်ညှိထားတဲ့အတွက် များသောအားဖြင့် ခရီးဆုံးကို မြန်မြန်နဲ့ တကယ့်အသက်သာဆုံးလမ်း နှစ်ခုစလုံးနဲ့ ရောက်တတ်တယ်။ ကိုချွေတာရဲ့ သေချာမှုနဲ့ ကိုစိတ်မြန်ရဲ့ မြန်ဆန်မှုကို ပေါင်းစပ်ထားသလိုပါပဲ။",
+    mechEn: "At each step, he adds up the real cost travelled so far with an estimate of the distance still remaining, and picks whichever city gives the smallest combined total. As long as his estimate never overpromises, this guarantees he finds the cheapest route of all.",
+    mechMy: "ခြေလှမ်းတိုင်းမှာ၊ အခုအထိ တကယ်ကုန်ကျခဲ့တဲ့ အကွာအဝေးနဲ့ ကျန်ရှိနေဦးမယ်လို့ ခန့်မှန်းထားတဲ့ အကွာအဝေးကို ပေါင်းပြီး၊ ပေါင်းလဒ် အနည်းဆုံးဖြစ်တဲ့ မြို့ကို ရွေးတယ်။ ခန့်မှန်းချက်က တကယ့်ကုန်ကျမှုထက် ဘယ်တော့မှ မပိုအောင် ခန့်မှန်းနိုင်သရွေ့၊ ဒါက အသက်သာဆုံးလမ်းကို အာမခံပေးတယ်။"
+  },
+];
+
+const rows = document.getElementById('rows');
+function render(lang) {
+  rows.innerHTML = '';
+  companions.forEach(c => {
+    const row = document.createElement('div');
+    row.className = 'companion-row';
+    row.innerHTML = `
+      <div class="portrait-lg" style="background:${c.color}33">
+        <img src="${c.img}" alt="${c.my}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="fallback" style="background:${c.color}">${c.my[1]}</div>
+      </div>
+      <div class="companion-text">
+        <div class="tag sans">${c.en.split(' · ')[0]}</div>
+        <div class="names">
+          <span class="my-name">${c.my}</span>
+          <span class="en-name sans">${c.en}</span>
+        </div>
+        <p class="bio">${lang === 'my' ? c.bioMy : c.bioEn}</p>
+      </div>
+    `;
+    rows.appendChild(row);
+  });
+}
+render('en');
+
+document.getElementById('langBtn').addEventListener('click', function() {
+  this.dataset.lang = this.dataset.lang === 'my' ? 'en' : 'my';
+  const lang = this.dataset.lang || 'my';
+  this.textContent = lang === 'my' ? 'English' : 'မြန်မာ';
+  const titles = {
+    en: { title: "Six companions, six ways of thinking", lead: "Each travel companion searches for a route in their own way. Meet them here, then pick one on the map to see how they think." },
+    my: { title: "အဖော် ခြောက်ယောက်၊ တွေးခေါ်ပုံ ခြောက်မျိုး", lead: "ခရီးအတူသွားမည့်သူ တစ်ယောက်စီက လမ်းကြောင်းကို မတူညီတဲ့နည်းနဲ့ ရှာဖွေသည်။ ဤနေရာတွင် သူတို့ကို စတင်မိတ်ဆက်ပြီး၊ မြေပုံပေါ်တွင် တစ်ယောက်ကို ရွေးချယ်ကြည့်ပါ။" }
+  };
+  document.getElementById('pageTitle').textContent = titles[lang].title;
+  document.getElementById('pageLead').textContent = titles[lang].lead;
+  render(lang);
+});
+</script>
+</body>
+</html>
