@@ -164,6 +164,20 @@ async function runSearch(c) {
     return;
   }
 
+  // Phase 1: show every city the algorithm actually checked, in the order it checked them
+  document.getElementById('routeStatus').innerHTML = `<b>${c.my}</b> is exploring cities…`;
+  for (const name of result.visited_order) {
+    const marker = cityMarkers[name];
+    if (!marker) continue;
+    marker.setStyle({ fillColor: '#999999', color: '#999999', fillOpacity: 0.6 });
+    marker.setRadius(5);
+    await new Promise(r => setTimeout(r, 60));
+  }
+
+  document.getElementById('routeStatus').innerHTML = `<b>${c.my}</b> found the way. Tracing the route…`;
+  await new Promise(r => setTimeout(r, 400));
+
+  // Phase 2: highlight the final chosen path on top of the explored cities
   const trail = [];
   for (let i = 0; i < result.path.length; i++) {
     const name = result.path[i];
