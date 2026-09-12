@@ -11,7 +11,7 @@ const companions = [
 
 let cities = {};
 let cityMarkers = {};
-let map, routeLine = null;
+let map, routeLine = null, exploreLayer = null;
 let selectedId = null;
 
 const fromSel = document.getElementById('fromSel');
@@ -129,11 +129,14 @@ async function runSearch(c) {
     marker.setStyle({ radius: 4, fillColor: null, color: null });
   });
   if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
+  if (exploreLayer) { map.removeLayer(exploreLayer); }
+  exploreLayer = L.layerGroup().addTo(map);
 
   document.getElementById('journeyLabel').textContent = `JOURNEY — ${start.toUpperCase()} TO ${goal.toUpperCase()}`;
   document.getElementById('routeStatus').innerHTML = `<b>${c.my}</b> is searching for a way from ${start} to ${goal}…`;
   document.getElementById('stepsList').innerHTML = '';
   document.getElementById('legendPathDot').style.background = c.color;
+  document.getElementById('legendPathLine').style.background = c.color;
 
   if (start === goal) {
     document.getElementById('routeStatus').textContent = 'Pick two different cities to find a route.';
@@ -165,13 +168,22 @@ async function runSearch(c) {
     return;
   }
 
-  // Phase 1: show every city the algorithm actually checked, in the order it checked them
+  // Phase 1: show every city the algorithm actually checked, and the search-tree edge that discovered it
   document.getElementById('routeStatus').innerHTML = `<b>${c.my}</b> is exploring cities…`;
   for (const name of result.visited_order) {
     const marker = cityMarkers[name];
     if (!marker) continue;
-    marker.setStyle({ fillColor: '#999999', color: '#999999', fillOpacity: 0.6 });
+    marker.setStyle({ fillColor: '#FF7A00', color: '#FF7A00', fillOpacity: 0.85 });
     marker.setRadius(5);
+
+    const parentName = result.parents[name];
+    if (parentName && cities[parentName] && cities[name]) {
+      L.polyline([
+        [cities[parentName].lat, cities[parentName].lon],
+        [cities[name].lat, cities[name].lon]
+      ], { color: '#FF7A00', weight: 1.5, dashArray: '4,4', opacity: 0.8 }).addTo(exploreLayer);
+    }
+
     await new Promise(r => setTimeout(r, 60));
   }
 
@@ -200,8 +212,14 @@ async function runSearch(c) {
     await new Promise(r => setTimeout(r, 320));
   }
 
+  const uniqueCities = new Set(result.visited_order).size;
+  const totalChecks = result.visited_order.length;
+  const checksLabel = totalChecks === uniqueCities
+    ? `${uniqueCities} cities checked`
+    : `${uniqueCities} cities checked (${totalChecks} total checks, some cities re-examined)`;
+
   document.getElementById('routeStatus').innerHTML =
-    `<b>${c.my}</b> reached ${goal} — ${result.path.length - 1} stops, ${result.visited_order.length} cities checked, ${Math.round(result.cost)} km total.`;
+    `<b>${c.my}</b> reached ${goal} — ${result.path.length - 1} stops, ${checksLabel}, ${Math.round(result.cost)} km total.`;
 }
 
 // ---- language toggle (UI chrome only — concept notes come from backend in English) ----

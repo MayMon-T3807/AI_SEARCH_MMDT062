@@ -38,7 +38,7 @@ def haversine(coords, city_a, city_b):
     lat1, lon1 = coords[city_a]["lat"], coords[city_a]["lon"]
     lat2, lon2 = coords[city_b]["lat"], coords[city_b]["lon"]
 
-    R = 6371  # earth radius in km
+    R = 6371
 
     lat1_rad = math.radians(lat1)
     lat2_rad = math.radians(lat2)
@@ -55,15 +55,18 @@ def greedy(graph, coords, start, goal):
     frontier = [[haversine(coords, start, goal), [start]]]
     visited = [start]
     visited_order = []
+    parents = {}
 
     while frontier:
         frontier.sort(key=lambda x: x[0])
         h, path = frontier.pop(0)
         city = path[-1]
         visited_order.append(city)
+        if len(path) > 1:
+            parents[city] = path[-2]
 
         if city == goal:
-            return {"path": path, "visited_order": visited_order, "cost": get_cost(graph, path)}
+            return {"path": path, "visited_order": visited_order, "cost": get_cost(graph, path), "parents": parents}
 
         for neighbor, weight in graph[city]:
             if neighbor not in visited:
@@ -72,22 +75,25 @@ def greedy(graph, coords, start, goal):
                 new_h = haversine(coords, neighbor, goal)
                 frontier.append([new_h, new_path])
 
-    return {"path": None, "visited_order": visited_order, "cost": None}
+    return {"path": None, "visited_order": visited_order, "cost": None, "parents": parents}
 
 
 def astar(graph, coords, start, goal):
     frontier = [[haversine(coords, start, goal), 0, [start]]]
     best_cost = {start: 0}
     visited_order = []
+    parents = {}
 
     while frontier:
         frontier.sort(key=lambda x: x[0])
         f, cost, path = frontier.pop(0)
         city = path[-1]
         visited_order.append(city)
+        if len(path) > 1:
+            parents[city] = path[-2]
 
         if city == goal:
-            return {"path": path, "visited_order": visited_order, "cost": cost}
+            return {"path": path, "visited_order": visited_order, "cost": cost, "parents": parents}
 
         for neighbor, weight in graph[city]:
             new_cost = cost + weight
@@ -97,7 +103,7 @@ def astar(graph, coords, start, goal):
                 new_f = new_cost + haversine(coords, neighbor, goal)
                 frontier.append([new_f, new_cost, new_path])
 
-    return {"path": None, "visited_order": visited_order, "cost": None}
+    return {"path": None, "visited_order": visited_order, "cost": None, "parents": parents}
 
 
 if __name__ == "__main__":

@@ -36,14 +36,17 @@ def bfs(graph, start, goal):
     queue.append([start])
     visited = [start]
     visited_order = []
+    parents = {}
 
     while queue:
         path = queue.popleft()
         city = path[-1]
         visited_order.append(city)
+        if len(path) > 1:
+            parents[city] = path[-2]
 
         if city == goal:
-            return {"path": path, "visited_order": visited_order, "cost": get_cost(graph, path)}
+            return {"path": path, "visited_order": visited_order, "cost": get_cost(graph, path), "parents": parents}
 
         for neighbor, weight in graph[city]:
             if neighbor not in visited:
@@ -51,13 +54,14 @@ def bfs(graph, start, goal):
                 new_path = path + [neighbor]
                 queue.append(new_path)
 
-    return {"path": None, "visited_order": visited_order, "cost": None}
+    return {"path": None, "visited_order": visited_order, "cost": None, "parents": parents}
 
 
 def dfs(graph, start, goal):
     stack = [[start]]
     visited = []
     visited_order = []
+    parents = {}
 
     while stack:
         path = stack.pop()
@@ -67,22 +71,25 @@ def dfs(graph, start, goal):
             continue
         visited.append(city)
         visited_order.append(city)
+        if len(path) > 1:
+            parents[city] = path[-2]
 
         if city == goal:
-            return {"path": path, "visited_order": visited_order, "cost": get_cost(graph, path)}
+            return {"path": path, "visited_order": visited_order, "cost": get_cost(graph, path), "parents": parents}
 
         for neighbor, weight in graph[city]:
             if neighbor not in visited:
                 new_path = path + [neighbor]
                 stack.append(new_path)
 
-    return {"path": None, "visited_order": visited_order, "cost": None}
+    return {"path": None, "visited_order": visited_order, "cost": None, "parents": parents}
 
 
 def ucs(graph, start, goal):
     frontier = [[0, [start]]]
     visited_order = []
     best_cost = {start: 0}
+    parents = {}
 
     while frontier:
         frontier.sort(key=lambda x: x[0])
@@ -90,9 +97,11 @@ def ucs(graph, start, goal):
         city = path[-1]
 
         visited_order.append(city)
+        if len(path) > 1:
+            parents[city] = path[-2]
 
         if city == goal:
-            return {"path": path, "visited_order": visited_order, "cost": cost}
+            return {"path": path, "visited_order": visited_order, "cost": cost, "parents": parents}
 
         for neighbor, weight in graph[city]:
             new_cost = cost + weight
@@ -101,14 +110,17 @@ def ucs(graph, start, goal):
                 new_path = path + [neighbor]
                 frontier.append([new_cost, new_path])
 
-    return {"path": None, "visited_order": visited_order, "cost": None}
+    return {"path": None, "visited_order": visited_order, "cost": None, "parents": parents}
 
 
 def ids(graph, start, goal):
     visited_order = []
+    parents = {}
 
     def dfs_limited(city, path, depth, limit, visited):
         visited_order.append(city)
+        if len(path) > 1:
+            parents[city] = path[-2]
 
         if city == goal:
             return path
@@ -131,9 +143,9 @@ def ids(graph, start, goal):
         visited = [start]
         result = dfs_limited(start, [start], 0, limit, visited)
         if result is not None:
-            return {"path": result, "visited_order": visited_order, "cost": get_cost(graph, result)}
+            return {"path": result, "visited_order": visited_order, "cost": get_cost(graph, result), "parents": parents}
 
-    return {"path": None, "visited_order": visited_order, "cost": None}
+    return {"path": None, "visited_order": visited_order, "cost": None, "parents": parents}
 
 
 if __name__ == "__main__":
