@@ -109,19 +109,19 @@
 const steps = [
   {
     en: { h: "Choose your travel companion", p: "Pick one of six companions on the home page. Each one searches for a route in their own way — careful, bold, budget-minded, patient, quick, or wise." },
-    my: { h: "ခရီးအတူသွားမည့်သူကို ရွေးပါ", p: "ပင်မစာမျက်နှာတွင် အဖော် ခြောက်ယောက်ထဲမှ တစ်ယောက်ကို ရွေးချယ်ပါ။ တစ်ယောက်စီက မတူညီတဲ့ပုံစံနဲ့ လမ်းကြောင်းကို ရှာဖွေသည်။" }
+    my: { h: "ခရီးဖော်တစ်ယောက် ရွေးပါ", p: "ပင်မစာမျက်နှာမှာရှိတဲ့ ခရီးဖော် ၆ ယောက်ထဲက ကိုယ်နဲ့အဆင်ပြေမယ့် တစ်ယောက်ကို ရွေးလိုက်ပါ။ တစ်ယောက်စီက လမ်းရှာတဲ့ပုံစံ မတူကြပါဘူး။" }
   },
   {
     en: { h: "Pick a start city and a destination", p: "Select where your journey begins and where it should end, from all 25 cities across Myanmar." },
-    my: { h: "စတင်မည့်မြို့နှင့် ခရီးဆုံးကို ရွေးပါ", p: "မြန်မာနိုင်ငံတစ်ဝှမ်းရှိ မြို့ ၂၅ မြို့ထဲမှ သင့်ခရီးစတင်မည့်နေရာနှင့် ဆုံးမည့်နေရာကို ရွေးချယ်ပါ။" }
+    my: { h: "ဘယ်ကနေ ဘယ်အထိ သွားမလဲ ရွေးပါ", p: "မြန်မာနိုင်ငံတစ်ဝှမ်းက မြို့ ၂၅ မြို့ထဲကနေ ခရီးစမယ့်မြို့နဲ့ သွားချင်တဲ့မြို့ကို ရွေးလိုက်ပါ။" }
   },
   {
     en: { h: "Watch your companion travel", p: "The map animates city by city, showing exactly how your companion explores — which places they check, and in what order." },
-    my: { h: "သင့်အဖော် ခရီးသွားပုံကို ကြည့်ပါ", p: "မြေပုံသည် မြို့တစ်မြို့ချင်းစီ အလိုက် သက်ဝင်လှုပ်ရှားပြီး၊ သင့်အဖော် မည်သည့်မြို့များကို မည်သည့်အစီအစဉ်ဖြင့် စစ်ဆေးကြောင်း တိကျစွာပြသသည်။" }
+    my: { h: "ခရီးဖော်နဲ့အတူ လမ်းရှာကြည့်ပါ", p: "မြေပုံပေါ်မှာ သင့်ခရီးဖော် ဘယ်မြို့ကနေ ဘယ်မြို့ကို ဘယ်လိုရွေးပြီး သွားနေလဲဆိုတာ တစ်ဆင့်ချင်း ကြည့်နိုင်ပါတယ်။" }
   },
   {
     en: { h: "See the route and the journey stats", p: "Once your companion arrives, the final path lights up — along with how many cities they checked and the total distance travelled." },
-    my: { h: "လမ်းကြောင်းနှင့် ခရီးစဉ်အချက်အလက်များကို ကြည့်ပါ", p: "သင့်အဖော် ရောက်ရှိသွားသောအခါ၊ နောက်ဆုံးလမ်းကြောင်းမှာ ထင်ရှားစွာပေါ်လာပြီး၊ စစ်ဆေးခဲ့သောမြို့အရေအတွက်နှင့် စုစုပေါင်းခရီးအကွာအဝေးပါ ပါဝင်လာမည်။" }
+    my: { h: "နောက်ဆုံးလမ်းကြောင်းကို ကြည့်ပါ", p: "ခရီးဆုံးရောက်တဲ့အခါ သွားခဲ့တဲ့ နောက်ဆုံးလမ်းကြောင်းကို မြေပုံပေါ်မှာ ရှင်းရှင်းလင်းလင်း မြင်ရပါမယ်။ ဘယ်နှစ်မြို့ စစ်ဆေးခဲ့လဲ၊ စုစုပေါင်း ဘယ်လောက်အကွာအဝေး သွားခဲ့လဲဆိုတာလည်း တစ်ခါတည်း ကြည့်နိုင်ပါတယ်။" }
   },
 ];
 
@@ -150,7 +150,7 @@ document.getElementById('langBtn').addEventListener('click', function() {
   this.textContent = lang === 'my' ? 'English' : 'မြန်မာ';
   const titles = {
     en: { title: "Choose your mate, start travelling", lead: "Four simple steps to watch a route get found across Myanmar." },
-    my: { title: "အဖော်ကိုရွေးပါ၊ ခရီးစတင်ပါ", lead: "မြန်မာနိုင်ငံတစ်ဝှမ်း လမ်းကြောင်းရှာဖွေတာကို ကြည့်ဖို့ ရိုးရှင်းသော အဆင့် လေးဆင့်။" }
+    my: { title: "အဖော်ရွေးပြီး ခရီးစလိုက်ပါ", lead: "သင့်အတွက် သင့်တော်တဲ့ ခရီးဖော်တစ်ယောက်ကို ရွေးပြီး မြန်မာနိုင်ငံတစ်ဝှမ်း လမ်းကြောင်းရှာဖွေပုံကို အတူတူကြည့်လိုက်ပါ။" }
   };
   document.getElementById('pageTitle').textContent = titles[lang].title;
   document.getElementById('pageLead').textContent = titles[lang].lead;
